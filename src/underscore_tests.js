@@ -95,9 +95,8 @@ var _ = { };
   _.pluck = function(array, propertyName) {
     var propOfAll = [];
     for (var i = 0; i < array.length; i++){
-      for (var propertyName in array[i]){
-        propOfAll.push((array[i])[propertyName]);
-      }
+      var currentObj = array[i];
+      propOfAll.push(currentObj[propertyName]);
     }
     return propOfAll;
   };
@@ -120,7 +119,7 @@ var _ = { };
         if (collection[i] === target){
           return true;
         }
-      }
+      }return false;
     } else {
       for (var prop in collection){
         if (collection[prop] === target){
@@ -152,6 +151,8 @@ var _ = { };
   // Extend a given object with all the properties of the passed in
   // object(s).
   _.extend = function(obj) {
+    var newObj = {};
+    
   };
 
   // Like extend, but doesn't ever overwrite a key that already
@@ -168,6 +169,13 @@ var _ = { };
   // Return a function that can be called at most one time. Subsequent calls
   // should return the previously returned value.
   _.once = function(func) {
+    
+    var executed = false;
+    return function() {
+      if (!executed){
+        executed = true;
+      }
+    }
   };
 
   // Memoize an expensive function by storing its results. You may assume
@@ -186,6 +194,7 @@ var _ = { };
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    
   };
 
 
