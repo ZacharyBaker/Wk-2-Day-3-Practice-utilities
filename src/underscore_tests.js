@@ -65,12 +65,23 @@ var _ = { };
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
     var arrTruth = [];
-    
-    
+    for (var i = 0; i < collection.length; i++){
+      if (iterator(collection[i])){
+        arrTruth.push(collection[i]);
+      }
+    }
+    return arrTruth;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, iterator) {
+    var arrFalse = [];
+    for (var i = 0; i < collection.length; i++){
+      if (!iterator(collection[i])){
+        arrFalse.push(collection[i]);
+      }
+    }
+    return arrFalse;
   };
 
   // Produce a duplicate-free version of the array.
@@ -87,6 +98,11 @@ var _ = { };
 
   // Return the results of applying an iterator to each element.
   _.map = function(array, iterator) {
+      var arr = [];
+      for (var i = 0; i < array.length; i++){
+        arr.push(iterator(array[i]));
+      }
+      return arr;
   };
 
   // Takes an array of objects and returns an array of the values of
@@ -103,7 +119,11 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
-    list.forEach(methodName());
+   
+   var newArr = list.sort();
+    for (var i = 0; i < list.length; i++){
+      methodName(list[i]);
+    }
   };
 
   // Reduces an array or object to a single value by repetitively calling
