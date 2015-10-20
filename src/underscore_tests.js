@@ -64,6 +64,7 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+    var arrTruth = [];
     
     
   };
@@ -74,6 +75,13 @@ var _ = { };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var newArr = [];
+    for (var i = 0; i < array.length; i++){
+      if (newArr.indexOf(array[i]) === -1){
+        newArr.push(array[i]);
+      }
+    } 
+    return newArr;
   };
 
 
@@ -81,14 +89,22 @@ var _ = { };
   _.map = function(array, iterator) {
   };
 
-  // Takes an array of objects and returns and array of the values of
+  // Takes an array of objects and returns an array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(array, propertyName) {
+    var propOfAll = [];
+    for (var i = 0; i < array.length; i++){
+      for (var propertyName in array[i]){
+        propOfAll.push((array[i])[propertyName]);
+      }
+    }
+    return propOfAll;
   };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
+    list.forEach(methodName());
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -99,6 +115,20 @@ var _ = { };
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
+    if (Array.isArray(collection)){
+      for (var i = 0; i < collection.length; i++){
+        if (collection[i] === target){
+          return true;
+        }
+      }
+    } else {
+      for (var prop in collection){
+        if (collection[prop] === target){
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
 
