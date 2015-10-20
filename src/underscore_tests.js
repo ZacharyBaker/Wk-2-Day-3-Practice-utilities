@@ -119,11 +119,20 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
-   
-   var newArr = list.sort();
-    for (var i = 0; i < list.length; i++){
-      methodName(list[i]);
+   for (var i = 0; i < list.length; i++){
+   var currentArr = list[i];
+    //var method = currArr[methodName] || methodName;
+    //method.apply(currentArr, args);    
+    
+ 
+     if (typeof methodName === 'string'){
+       currentArr[methodName](args);
+     } else {
+      methodName.apply(currentArr, args);
     }
+   
+    return list;
+  
   };
 
   // Reduces an array or object to a single value by repetitively calling
