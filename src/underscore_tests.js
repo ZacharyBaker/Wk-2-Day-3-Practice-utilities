@@ -130,15 +130,26 @@ var _ = { };
      } else {
       methodName.apply(currentArr, args);
     }
-   
+   }
     return list;
-  
-  };
+  }
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
   _.reduce = function(collection, iterator, initialValue) {
+    var result;
+    var previousValue;
+    if (initialValue){
+      previousValue = iterator(initialValue, collection[0]);
+    } else {
+      previousValue = collection[0];
+    }
+    for (var i = 0; i < collection.length - 1; i++){
+      result = iterator(previousValue, collection[i+1]);
+      previousValue = result;
+    }
+    return result;
   };
 
   // Determine if the array or object contains a given value (using `===`).
@@ -162,12 +173,62 @@ var _ = { };
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
+   var allTrue = true;
+    if (iterator !== undefined){
+      for (var i = 0; i < collection.length; i++){
+        if (!iterator(collection[i])){
+          allTrue = false;
+        }
+      }
+    } return allTrue;
   };
-
+    
+  
+  
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
+    var counter = 0;
+    var result;
+    iterator = iterator || function(number){return number % 2 === 0};
+   var arrFalse = [0, false, '', NaN, undefined, null];
+   for (var i = 0; i < collection.length; i++){
+     if (arrFalse.indexOf(collection[i]) > -1){
+       counter++;
+     } 
+    if (counter === collection.length){
+     return false;
+     }
+   } 
+    for (var j = 0; j < collection.length; j++){
+      if (iterator(collection[j])){
+        return true;
+      } 
+      
+    }
+    return false;
+    
   };
+  //      iterator = iterator || function(number){return number % 2 === 0;};  // default iterator
+  //   var counter = 0;
+  //   var falsey = [null, 0, '', false, NaN, undefined];
+  //   for(var i=0; i<collection.length; i++){
+  //     if(falsey.indexOf(collection[i])>-1){
+  //       counter++;
+  //     }
+  //   }
+  //   if(counter===collection.length){
+  //     return false;
+  //   }
+  //   // now check iterator
+  //   for(var j=0; j<collection.length; j++){
+  //     if(iterator(collection[j])){
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // } ;
+  
 
 
   /**
